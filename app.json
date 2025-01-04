@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Becodemy",
-    "slug": "Becodemy-App",
+    "slug": "cortex",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -43,8 +43,12 @@
     },
     "extra": {
       "eas": {
-        "projectId": "a59c0afd-1ec9-4a88-9a44-6d26de8b1505"
+        "projectId": "331de5db-9dce-4d36-874d-c5f23450683e"
+      },
+      "router": {
+        "origin": false
       }
-    }
+    },
+    "owner": "gabriel2154"
   }
 }

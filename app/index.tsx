@@ -2,26 +2,30 @@ import React, { useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { Redirect } from "expo-router";
 
-export default function index() {
-  const [loggedInUser, setloggedInUser] = useState(false);
+export default function Index() {
+  const [loggedInUser, setLoggedInUser] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const subscription = async () => {
-      const token = SecureStore.getItem("accessToken");
-      setloggedInUser(token ? true : false);
-      setLoading(false);
+    const checkAuthentication = async () => {
+      try {
+        const token = await SecureStore.getItemAsync("accessToken");
+        setLoggedInUser(!!token); // Set loggedInUser to true if token exists
+      } catch (error) {
+        console.error("Error retrieving access token:", error);
+      } finally {
+        setLoading(false); // Ensure loading is set to false regardless of success/failure
+      }
     };
-    subscription();
+
+    checkAuthentication();
   }, []);
 
+  if (loading) {
+    return null; // Show nothing or a loading spinner
+  }
+
   return (
-    <>
-      {loading ? (
-        <></>
-      ) : (
-        <Redirect href={!loggedInUser ? "/(routes)/onboarding" : "/(tabs)"} />
-      )}
-    </>
+    <Redirect href={!loggedInUser ? "/(routes)/onboarding" : "/(tabs)"} />
   );
 }
